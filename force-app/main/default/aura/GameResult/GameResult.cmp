@@ -1,0 +1,38 @@
+<aura:component controller="GameResultController" implements="flexipage:availableForAllPageTypes">
+    <!-- Attributes -->
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="currentPageData" type="Object" />
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="currentPage" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+    <aura:handler event="c:ResultApplicationEvent" action="{!c.onResultHandler}" />
+
+    <lightning:card title="Game Results" iconName="custom:custom18">
+        <div class="slds-var-p-around_medium">
+            <lightning:datatable
+                keyField="id"
+                data="{! v.currentPageData }"
+                columns="{! v.columns }"
+                hideCheckboxColumn="true"/>
+
+                <aura:if isTrue="{! empty(v.currentPageData) }">
+    <div class="slds-text-body_regular slds-text-align_center">No game results found.</div>
+</aura:if>
+
+            <!-- Pagination Buttons -->
+            <div class="slds-m-top_medium slds-align_absolute-center">
+                <lightning:button label="Previous" onclick="{! c.previousPage }" disabled="{! v.currentPage == 1 }"/>
+                <lightning:button label="Next" onclick="{! c.nextPage }" disabled="{! v.currentPage == v.totalPages }" class="slds-m-left_small"/>
+            </div>
+
+            <!-- Page Info -->
+            <div class="slds-m-top_small slds-align_absolute-center">
+                Page {!v.currentPage} of {!v.totalPages}
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

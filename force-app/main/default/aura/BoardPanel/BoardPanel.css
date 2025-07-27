@@ -1,0 +1,15 @@
+.THIS .custom-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: navy;
+    display: flex;
+    align-items: center;
+}
+
+.THIS .game-icon {
+    height: 28px;
+    width: 30px;
+    margin-left: 8px; /* This moves the icon to the right */
+    margin-right: 15px; /* Space between icon and text */
+    border-radius: 4px;
+}

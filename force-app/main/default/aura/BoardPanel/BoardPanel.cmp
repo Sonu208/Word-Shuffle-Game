@@ -1,0 +1,64 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="BoardPanelController"  >
+
+  <aura:attribute name="options" type="List" default="[
+    {'label': 'Easy', 'value': 'easy'},
+    {'label': 'Medium', 'value': 'medium'},
+    {'label': 'Hard', 'value': 'hard'},
+    ]"/>
+
+
+<aura:attribute name="SelectedGameMode" type="String"  />
+<aura:attribute name="reshuffleDisabled" type="Boolean" default="true" />
+    <aura:attribute name="iconUrl" type="String" default="/resource/wordShuffleIcon" />
+
+
+<aura:handler event="c:ResultApplicationEvent" action="{!c.onResultHandler}" />
+
+<lightning:card>
+
+    
+    <div class="custom-title">
+        <img src="{!v.iconUrl}" alt="Word Game" class="game-icon"/>
+        <span>Word Shuffle</span>
+    </div>
+
+
+    <lightning:layout horizontalAlign="center" multipleRows="true">
+
+         
+    <lightning:layoutItem padding="around-small">
+            <lightning:combobox name="GameMode" 
+            label="Game Mode" value="inProgress" 
+            variant="label-hidden" 
+            aura:id="gameMode" 
+            placeholder="Select Game Mode" 
+            options="{! v.options }"  />
+
+    </lightning:layoutItem>
+
+
+
+   <lightning:layoutItem  padding="around-small">
+<lightning:button aura:id="start" variant="brand" label="Start new Game" title="Start Click" onclick="{!c.startGame}"/>
+    </lightning:layoutItem>
+
+     <lightning:layoutItem  padding="around-small">
+    <lightning:button label="Reshuffle" title="Reshuffle" disabled="{!v.reshuffleDisabled}" onclick="{!c.reshuffleBoard}"  /> 
+
+    </lightning:layoutItem>
+
+    
+     <aura:if isTrue="{! (v.SelectedGameMode != null)}">
+        <lightning:layoutItem size="12">
+
+    <c:Board aura:id="boardComp" mode="{!v.SelectedGameMode}"></c:Board>
+      </lightning:layoutItem>
+
+     </aura:if>
+
+
+    </lightning:layout>
+
+
+    </lightning:card>
+</aura:component>
